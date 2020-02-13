@@ -56,18 +56,21 @@ axios.get('https://api.github.com/users/josiahroa18/followers')
           Using DOM methods and properties, create a component that will return the following DOM element:
 
 <div class="card">
-  <img src={image url of user} />
-  <div class="card-info">
-    <h3 class="name">{users name}</h3>
-    <p class="username">{users user name}</p>
-    <p>Location: {users location}</p>
-    <p>Profile:  
-      <a href={address to users github page}>{address to users github page}</a>
-    </p>
-    <p>Followers: {users followers count}</p>
-    <p>Following: {users following count}</p>
-    <p>Bio: {users bio}</p>
+  <div class="card-container">
+    <img src={image url of user} />
+    <div class="card-info">
+      <h3 class="name">{users name}</h3>
+      <p class="username">{users user name}</p>
+      <p>Location: {users location}</p>
+      <p>Profile:  
+        <a href={address to users github page}>{address to users github page}</a>
+      </p>
+      <p>Followers: {users followers count}</p>
+      <p>Following: {users following count}</p>
+      <p>Bio: {users bio}</p>
+    </div>
   </div>
+  <div class="calendar"></div>
 </div>
 
 */
@@ -75,6 +78,7 @@ axios.get('https://api.github.com/users/josiahroa18/followers')
 function GitHubCard(data){
   // Create elements
   const card = document.createElement('div'),
+        container = document.createElement('div'),
         img = document.createElement('img'),
         info = document.createElement('div'),
         name = document.createElement('h3'),
@@ -85,14 +89,15 @@ function GitHubCard(data){
         followers = document.createElement('p'),
         following = document.createElement('p'),
         bio = document.createElement('p');
-
   // Nest Elements
-  card.appendChild(img);
-  card.appendChild(info);
+  card.appendChild(container);
+  container.appendChild(img);
+  container.appendChild(info);
   info.append(name, username, location, profile, followers, following, bio);
 
   // Apply classes
   card.classList.add('card');
+  container.classList.add('card-container');
   info.classList.add('card-info');
   name.classList.add('name');
   username.classList.add('username');
@@ -113,11 +118,51 @@ function GitHubCard(data){
 
   // Nesting link after applying text context to profile
   profile.appendChild(link);
-  
+
+  // STRETCH: Add github calendar
+  const calendar = document.createElement('div');
+  calendar.classList.add('calendar');
+  new GitHubCalendar(calendar, data.login, {responsive: true});
+  card.appendChild(calendar);
   return card;
 }
 
-// console.log(GitHubCard());
+data = {
+  "login": "josiahroa18",
+  "id": 35950476,
+  "node_id": "MDQ6VXNlcjM1OTUwNDc2",
+  "avatar_url": "https://avatars0.githubusercontent.com/u/35950476?v=4",
+  "gravatar_id": "",
+  "url": "https://api.github.com/users/josiahroa18",
+  "html_url": "https://github.com/josiahroa18",
+  "followers_url": "https://api.github.com/users/josiahroa18/followers",
+  "following_url": "https://api.github.com/users/josiahroa18/following{/other_user}",
+  "gists_url": "https://api.github.com/users/josiahroa18/gists{/gist_id}",
+  "starred_url": "https://api.github.com/users/josiahroa18/starred{/owner}{/repo}",
+  "subscriptions_url": "https://api.github.com/users/josiahroa18/subscriptions",
+  "organizations_url": "https://api.github.com/users/josiahroa18/orgs",
+  "repos_url": "https://api.github.com/users/josiahroa18/repos",
+  "events_url": "https://api.github.com/users/josiahroa18/events{/privacy}",
+  "received_events_url": "https://api.github.com/users/josiahroa18/received_events",
+  "type": "User",
+  "site_admin": false,
+  "name": "Josiah Roa",
+  "company": null,
+  "blog": "josiahroa.com",
+  "location": "Lamda School",
+  "email": null,
+  "hireable": null,
+  "bio": "Passionate Web Developer",
+  "public_repos": 35,
+  "public_gists": 0,
+  "followers": 27,
+  "following": 33,
+  "created_at": "2018-01-30T06:50:23Z",
+  "updated_at": "2020-02-13T02:53:20Z"
+}
+// console.log(GitHubCard(data));
+// cards.appendChild(GitHubCard(data));
+
 
 /* List of LS Instructors Github username's: 
   tetondan
